@@ -102,8 +102,7 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__branch__
 say     true
@@ -117,15 +116,14 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     true
-say   < notdup1.__branch__
+say   < notDup1.__branch__
 say < if-not-and
  
 say > if-and2
@@ -135,16 +133,14 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__dup__
 say     dup2.__init__
 say   < dup1.__dup__
 say   > dup1.__branch__
 say     condC.__init__
-say     > dup2.__rebind__(condC)
-say     < dup2.__rebind__(condC)
+say     dup2.__rebind__(condC)
 say   < dup1.__branch__
 say   > dup2.__branch__
 say     true
@@ -158,18 +154,17 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
 say   > dup1.__branch__
 say     true
 say   < dup1.__branch__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     false
-say   < notdup1.__branch__
+say   < notDup1.__branch__
 say < if-and-else
  
 say > if-and2-else
@@ -179,26 +174,24 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__dup__
 say     dup2.__init__
 say   < dup1.__dup__
 say   > dup1.__branch__
 say     condC.__init__
-say     > dup2.__rebind__(condC)
-say     < dup2.__rebind__(condC)
+say     dup2.__rebind__(condC)
 say   < dup1.__branch__
 say   > dup2.__not__
-say     notdup2.__init__
+say     notDup2.__init__
 say   < dup2.__not__
 say   > dup2.__branch__
 say     true
 say   < dup2.__branch__
-say   > notdup2.__branch__
+say   > notDup2.__branch__
 say     false
-say   < notdup2.__branch__
+say   < notDup2.__branch__
 say < if-and2-else
  
 say > if-and ... if not, same instance
@@ -209,18 +202,17 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__branch__
 say     true
 say   < dup1.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     false
-say   < notdup1.__branch__
+say   < notDup1.__branch__
 say < if-and ... if not, same instance
  
 say > if-and2 ... if not, same instance
@@ -231,26 +223,24 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > condA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < condA.__branch__
 say   > dup1.__dup__
 say     dup2.__init__
 say   < dup1.__dup__
 say   > dup1.__branch__
 say     condC.__init__
-say     > dup2.__rebind__(condC)
-say     < dup2.__rebind__(condC)
+say     dup2.__rebind__(condC)
 say   < dup1.__branch__
 say   > dup2.__branch__
 say     true
 say   < dup2.__branch__
 say   > dup2.__not__
-say     notdup2.__init__
+say     notDup2.__init__
 say   < dup2.__not__
-say   > notdup2.__branch__
+say   > notDup2.__branch__
 say     false
-say   < notdup2.__branch__
+say   < notDup2.__branch__
 say < if-and2 ... if not, same instance
  
 say > if-or
@@ -263,8 +253,7 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > notA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < notA.__branch__
 say   > dup1.__branch__
 say     true
@@ -281,20 +270,18 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > notA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < notA.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
 say   > dup1.__dup__
 say     dup2.__init__
 say   < dup1.__dup__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     condC.__init__
-say     > dup2.__rebind__(condC)
-say     < dup2.__rebind__(condC)
-say   < notdup1.__branch__
+say     dup2.__rebind__(condC)
+say   < notDup1.__branch__
 say   > dup2.__branch__
 say     true
 say   < dup2.__branch__
@@ -310,18 +297,17 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > notA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < notA.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
 say   > dup1.__branch__
 say     true
 say   < dup1.__branch__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     false
-say   < notdup1.__branch__
+say   < notDup1.__branch__
 say < if-or-else
  
 say > if-or2-else
@@ -334,29 +320,27 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > notA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < notA.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
 say   > dup1.__dup__
 say     dup2.__init__
 say   < dup1.__dup__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     condC.__init__
-say     > dup2.__rebind__(condC)
-say     < dup2.__rebind__(condC)
-say   < notdup1.__branch__
+say     dup2.__rebind__(condC)
+say   < notDup1.__branch__
 say   > dup2.__not__
-say     notdup2.__init__
+say     notDup2.__init__
 say   < dup2.__not__
 say   > dup2.__branch__
 say     true
 say   < dup2.__branch__
-say   > notdup2.__branch__
+say   > notDup2.__branch__
 say     false
-say   < notdup2.__branch__
+say   < notDup2.__branch__
 say < if-or2-else
  
 say > if-or ... if not, same instance
@@ -370,18 +354,17 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > notA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < notA.__branch__
 say   > dup1.__branch__
 say     true
 say   < dup1.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     false
-say   < notdup1.__branch__
+say   < notDup1.__branch__
 say < if-or ... if not, same instance
  
 say > if-or2 ... if not, same instance
@@ -395,29 +378,27 @@ say     dup1.__init__
 say   < condA.__dup__
 say   > notA.__branch__
 say     condB.__init__
-say     > dup1.__rebind__(condB)
-say     < dup1.__rebind__(condB)
+say     dup1.__rebind__(condB)
 say   < notA.__branch__
 say   > dup1.__not__
-say     notdup1.__init__
+say     notDup1.__init__
 say   < dup1.__not__
 say   > dup1.__dup__
 say     dup2.__init__
 say   < dup1.__dup__
-say   > notdup1.__branch__
+say   > notDup1.__branch__
 say     condC.__init__
-say     > dup2.__rebind__(condC)
-say     < dup2.__rebind__(condC)
-say   < notdup1.__branch__
+say     dup2.__rebind__(condC)
+say   < notDup1.__branch__
 say   > dup2.__branch__
 say     true
 say   < dup2.__branch__
 say   > dup2.__not__
-say     notdup2.__init__
+say     notDup2.__init__
 say   < dup2.__not__
-say   > notdup2.__branch__
+say   > notDup2.__branch__
 say     false
-say   < notdup2.__branch__
+say   < notDup2.__branch__
 say < if-or2 ... if not, same instance
  
 ```
