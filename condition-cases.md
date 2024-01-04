@@ -102,6 +102,28 @@ Ultimately, the best solution would be if Bolt had better support for directly o
                               else:
                                 body2
                               ```
+                      
+                      - 1.  notDup1 -> `__branch__`: body1
+                            ```py
+                            cond = not(condA or condB)
+                            if cond:
+                              body1
+                            ```
+                        2.  notDup1 -> `__not__` -> `__branch__`: body1
+                            ```py
+                            if not cond:
+                              body2
+                            ```
+                      
+                      - 1.  notNotDup1 = (notDup1 -> `__not__`)
+                        2.  notDup1 -> `__branch__`: body1
+                        3.  notNotDup1 -> `__branch__`: body2
+                        ```py
+                        if not(condA or condB):
+                          body1
+                        else:
+                          body2
+                        ```
     
     - 1.  dup1 = (condA -> `__dup__`)
       2.  condA -> `__branch__`:
@@ -121,16 +143,32 @@ Ultimately, the best solution would be if Bolt had better support for directly o
 
           - 1.  notDup1 = (dup1 -> `__not__`)
             2. 
-                - notDup1 -> `__branch__`: body1
-                  ```py
-                  if not (condA and condB):
-                    body1
-                  ```
+                - 1.  notDup1 -> `__branch__`: body1
+                      ```py
+                      cond = not (condA and condB)
+                      if cond:
+                        body1
+                      ```
+                  2.  notDup1 -> `__not__` -> `__branch__`: body2
+                      ```py
+                      if not cond:
+                        body2
+                      ```
 
                 - 1.  dup1 -> `__branch__`: body1
                   2.  notDup1 -> `__branch__`: body2
                   ```py
                   if condA and condB:
+                    body1
+                  else:
+                    body2
+                  ```
+                
+                - 1. notNotDup1 = (notDup1 -> `__not__`)
+                  2. notDup1 -> `__branch__`: body1
+                  3. notNotDup1 -> `__branch__`: body2
+                  ```py
+                  if not(condA and condB):
                     body1
                   else:
                     body2
@@ -154,11 +192,34 @@ Ultimately, the best solution would be if Bolt had better support for directly o
                       ```
 
                 - 1.  notDup"N" = (dup"N" -> `__not__`)
-                  2.  dup"N" -> `__branch__`: body1
-                  3.  notDup"N" -> `__branch__`: body2
-                  ```py
-                  if condA and condB and condC and ...:
-                    body1
-                  else:
-                    body2
-                  ```
+                  2.  
+                      - 1.  dup"N" -> `__branch__`: body1
+                        2.  notDup"N" -> `__branch__`: body2
+                        ```py
+                        if condA and condB and condC and ...:
+                          body1
+                        else:
+                          body2
+                        ```
+                      
+                      - 1.  notDup"N" -> `__branch__`: body1
+                            ```py
+                            cond = not(condA and condB and condC and ...)
+                            if cond:
+                              body1
+                            ```
+                        2.  notDup"N" -> `__not__` -> `__branch__`: body2
+                            ```py
+                            if not cond:
+                              body2
+                            ```
+                      
+                      - 1.  notNotDup"N" = (notDup"N" -> `__not__`)
+                        2.  notDup"N" -> `__branch__`: body1
+                        3.  notNotDup"N" -> `__branch__`: body2
+                        ```py
+                        if not(condA and condB and condC and ...):
+                          body1
+                        else:
+                          body2
+                        ```
