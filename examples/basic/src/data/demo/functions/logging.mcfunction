@@ -1,39 +1,27 @@
 from contextlib import contextmanager
 from typing import Generator
-from typing_extensions import Self, Callable, Any, Literal
+from typing_extensions import Any, Literal
 
-indent = 0
-def log_say(msg: str, /) -> None:
-    indented_msg = ("  " * indent) + msg
-    say indented_msg
-    print(indented_msg)
+from bolt_control_flow:test/helpers import log_say, log_block, test
 
-@contextmanager
-def log_block(name: str) -> Generator[None, Any, None]:
-    log_say(f"> {name}")
-    global indent
-    indent += 1
-    yield
-    indent -= 1
-    log_say(f"< {name}")
 
 class ConditionTest:
-    _cond_count: int = ord('A')
+    _cond_count: int = ord("A")
     _dup_count: int = 1
 
     def condition(self) -> "LoggingCondition":
         idx = chr(self._cond_count)
         self._cond_count += 1
         return LoggingCondition(f"cond{idx}", self)
-    
+
     def not_name(self, condition: "LoggingCondition") -> str:
         name = condition.name
         if name.startswith("cond"):
-            name = name[len("cond"):]
+            name = name[len("cond") :]
         else:
             start = name[0].upper()
             name = start + name[1:]
-        
+
         return f"not{name}"
 
     def dup_name(self) -> str:
@@ -41,18 +29,6 @@ class ConditionTest:
         self._dup_count += 1
         return f"dup{idx}"
 
-def test(name: str, enabled: bool = True) -> Callable[[Callable[[ConditionTest], Any]], None]:
-    def decorator(test: Callable[[ConditionTest], Any]) -> None:
-        if enabled:
-            with log_block(name):
-                test(ConditionTest())
-        else:
-            log_say(f"{name} (test disabled)")
-        
-        print()
-        raw f" "
-
-    return decorator
 
 # TODO: Use actual condition class as base
 class LoggingCondition:
@@ -64,15 +40,15 @@ class LoggingCondition:
         self.test = test
         log_say(f"{self.name}.__init__")
 
-    def __not__(self) -> Self:
+    def __not__(self) -> "LoggingCondition":
         with log_block(f"{self.name}.__not__"):
             return LoggingCondition(self.test.not_name(self), self.test)
 
-    def __dup__(self) -> Self:
+    def __dup__(self) -> "LoggingCondition":
         with log_block(f"{self.name}.__dup__"):
             return LoggingCondition(self.test.dup_name(), self.test)
 
-    def __rebind__(self, other: Self, /) -> Self:
+    def __rebind__(self, other: "LoggingCondition", /) -> "LoggingCondition":
         log_say(f"{self.name}.__rebind__({other.name})")
         return self
 
@@ -83,7 +59,8 @@ class LoggingCondition:
 
 
 @test("if", enabled=False)
-def just_if(test: ConditionTest):
+def just_if():
+    test = ConditionTest()
     if test.condition():
         log_say("true")
 
@@ -94,8 +71,10 @@ def just_if(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-not", enabled=False)
-def if_not(test: ConditionTest):
+def if_not():
+    test = ConditionTest()
     if not test.condition():
         log_say("true")
 
@@ -108,8 +87,10 @@ def if_not(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-else", enabled=False)
-def if_else(test: ConditionTest):
+def if_else():
+    test = ConditionTest()
     if test.condition():
         log_say("true")
     else:
@@ -127,8 +108,10 @@ def if_else(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if-not-else", enabled=False)
-def if_not_else(test: ConditionTest):
+def if_not_else():
+    test = ConditionTest()
     if not test.condition():
         log_say("true")
     else:
@@ -148,8 +131,10 @@ def if_not_else(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if ... if not, same instance", enabled=False)
-def if_if_not_same_instance(test: ConditionTest):
+def if_if_not_same_instance():
+    test = ConditionTest()
     log_say("Should be different from if-else")
     condA = test.condition()
     if condA:
@@ -170,8 +155,10 @@ def if_if_not_same_instance(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if not ... if not, same instance", enabled=False)
-def if_not_if_not_same_instance(test: ConditionTest):
+def if_not_if_not_same_instance():
+    test = ConditionTest()
     log_say("Should be different from if-not-else")
     condA = not test.condition()
     if condA:
@@ -196,7 +183,8 @@ def if_not_if_not_same_instance(test: ConditionTest):
 
 
 @test("if-and", enabled=False)
-def if_and(test: ConditionTest):
+def if_and():
+    test = ConditionTest()
     if test.condition() and test.condition():
         log_say("true")
 
@@ -213,8 +201,10 @@ def if_and(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-not-and", enabled=False)
-def if_not_and(test: ConditionTest):
+def if_not_and():
+    test = ConditionTest()
     if not (test.condition() and test.condition()):
         log_say("true")
 
@@ -233,8 +223,10 @@ def if_not_and(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-and-else", enabled=False)
-def if_and_else(test: ConditionTest):
+def if_and_else():
+    test = ConditionTest()
     if test.condition() and test.condition():
         log_say("true")
     else:
@@ -259,13 +251,15 @@ def if_and_else(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if-not-and-else", enabled=False)
-def if_not_and_else(test: ConditionTest):
-    if not(test.condition() and test.condition()):
+def if_not_and_else():
+    test = ConditionTest()
+    if not (test.condition() and test.condition()):
         log_say("true")
     else:
         log_say("false")
-    
+
     if False:
         # Simplified codegen
         condA = test.condition()
@@ -275,19 +269,21 @@ def if_not_and_else(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         notDup1 = dup1.__not__()
         notNotDup1 = notDup1.__not__()
         with notDup1.__branch__() as success:
             if success:
                 log_say("true")
-        
+
         with notNotDup1.__branch__() as success:
             if success:
                 log_say("false")
 
+
 @test("if-and ... if not, same instance", enabled=False)
-def if_and_if_not_same_instance(test: ConditionTest):
+def if_and_if_not_same_instance():
+    test = ConditionTest()
     log_say("should be different from if-and-else")
     cond = test.condition() and test.condition()
     if cond:
@@ -315,8 +311,10 @@ def if_and_if_not_same_instance(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if not and ... if not, same instance", enabled=False)
-def if_not_and_if_not_same_instance(test: ConditionTest):
+def if_not_and_if_not_same_instance():
+    test = ConditionTest()
     log_say("Should be different from if-not-and-else")
     condA = not (test.condition() and test.condition())
     if condA:
@@ -324,7 +322,7 @@ def if_not_and_if_not_same_instance(test: ConditionTest):
 
     if not condA:
         log_say("false")
-    
+
     if False:
         # Simplified codegen
         condA = test.condition()
@@ -334,19 +332,21 @@ def if_not_and_if_not_same_instance(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         notDup1 = dup1.__not__()
         with notDup1.__branch__() as success:
             if success:
                 log_say("true")
-        
+
         notNotDup1 = notDup1.__not__()
         with notNotDup1.__branch__() as success:
             if success:
                 log_say("false")
 
+
 @test("if-and2", enabled=False)
-def if_and2(test: ConditionTest):
+def if_and2():
+    test = ConditionTest()
     if test.condition() and test.condition() and test.condition():
         log_say("true")
 
@@ -369,8 +369,10 @@ def if_and2(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-not-and2", enabled=False)
-def if_not_and2(test: ConditionTest):
+def if_not_and2():
+    test = ConditionTest()
     if not (test.condition() and test.condition() and test.condition()):
         log_say("true")
 
@@ -383,20 +385,22 @@ def if_not_and2(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         dup2 = dup1.__dup__()
         with dup1.__branch__() as success:
             if success:
                 condC = test.condition()
                 dup2 = dup2.__rebind__(condC)
-        
+
         notDup2 = dup2.__not__()
         with notDup2.__branch__() as success:
             if success:
                 log_say("true")
 
+
 @test("if-and2-else", enabled=False)
-def if_and2_else(test: ConditionTest):
+def if_and2_else():
+    test = ConditionTest()
     if test.condition() and test.condition() and test.condition():
         log_say("true")
     else:
@@ -427,13 +431,15 @@ def if_and2_else(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if-not-and2-else", enabled=False)
-def if_not_and2_else(test: ConditionTest):
-    if not(test.condition() and test.condition() and test.condition()):
+def if_not_and2_else():
+    test = ConditionTest()
+    if not (test.condition() and test.condition() and test.condition()):
         log_say("true")
     else:
         log_say("false")
-    
+
     if False:
         # Simplified codegen
         condA = test.condition()
@@ -443,25 +449,27 @@ def if_not_and2_else(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         dup2 = dup1.__dup__()
         with dup1.__branch__() as success:
             if success:
                 condC = test.condition()
                 dup2 = dup2.__rebind__(condC)
-        
+
         notDup2 = dup2.__not__()
         notNotDup2 = notDup2.__not__()
         with notDup2.__branch__() as success:
             if success:
                 log_say("true")
-        
+
         with notNotDup2.__branch__() as success:
             if success:
                 log_say("false")
 
+
 @test("if-and2 ... if not, same instance", enabled=False)
-def if_and2_if_not_same_instance(test: ConditionTest):
+def if_and2_if_not_same_instance():
+    test = ConditionTest()
     log_say("should be different from if-and2-else")
     cond = test.condition() and test.condition() and test.condition()
     if cond:
@@ -494,8 +502,10 @@ def if_and2_if_not_same_instance(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if not and2 ... if not, same instance", enabled=False)
-def if_not_and2_if_not_same_instance(test: ConditionTest):
+def if_not_and2_if_not_same_instance():
+    test = ConditionTest()
     log_say("Should be different from if-not-and2-else")
     condA = not (test.condition() and test.condition() and test.condition())
     if condA:
@@ -503,7 +513,7 @@ def if_not_and2_if_not_same_instance(test: ConditionTest):
 
     if not condA:
         log_say("false")
-    
+
     if False:
         # Simplified codegen
         condA = test.condition()
@@ -513,25 +523,27 @@ def if_not_and2_if_not_same_instance(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         dup2 = dup1.__dup__()
         with dup1.__branch__() as success:
             if success:
                 condC = test.condition()
                 dup2 = dup2.__rebind__(condC)
-        
+
         notDup2 = dup2.__not__()
         with notDup2.__branch__() as success:
             if success:
                 log_say("true")
-        
+
         notNotDup2 = notDup2.__not__()
         with notNotDup2.__branch__() as success:
             if success:
                 log_say("false")
 
+
 @test("if-or", enabled=False)
-def if_or(test: ConditionTest):
+def if_or():
+    test = ConditionTest()
     if test.condition() or test.condition():
         log_say("true")
 
@@ -550,9 +562,11 @@ def if_or(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-not-or", enabled=False)
-def if_not_or(test: ConditionTest):
-    if not(test.condition() or test.condition()):
+def if_not_or():
+    test = ConditionTest()
+    if not (test.condition() or test.condition()):
         log_say("true")
 
     if False:
@@ -571,8 +585,10 @@ def if_not_or(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-or-else", enabled=False)
-def if_or_else(test: ConditionTest):
+def if_or_else():
+    test = ConditionTest()
     if test.condition() or test.condition():
         log_say("true")
     else:
@@ -598,13 +614,15 @@ def if_or_else(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if-not-or-else", enabled=True)
-def if_not_or_else(test: ConditionTest):
-    if not(test.condition() or test.condition()):
+def if_not_or_else():
+    test = ConditionTest()
+    if not (test.condition() or test.condition()):
         log_say("true")
     else:
         log_say("false")
-    
+
     if False:
         # Simplified codegen
         condA = test.condition()
@@ -615,19 +633,21 @@ def if_not_or_else(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         notDup1 = dup1.__not__()
         notNotDup1 = notDup1.__not__()
         with notDup1.__branch__() as success:
             if success:
                 log_say("true")
-        
+
         with notNotDup1.__branch__() as success:
             if success:
                 log_say("false")
 
+
 @test("if-or ... if not, same instance", enabled=False)
-def if_or_if_not_same_instance(test: ConditionTest):
+def if_or_if_not_same_instance():
+    test = ConditionTest()
     log_say("should be different from if-or-else")
     cond = test.condition() or test.condition()
     if cond:
@@ -656,16 +676,18 @@ def if_or_if_not_same_instance(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if-not-or ... if not, same instance", enabled=False)
-def if_not_or_if_not_same_instance(test: ConditionTest):
+def if_not_or_if_not_same_instance():
+    test = ConditionTest()
     log_say("should be different from if-not-or-else")
-    cond = not(test.condition() or test.condition())
+    cond = not (test.condition() or test.condition())
     if cond:
         log_say("true")
 
     if not cond:
         log_say("false")
-    
+
     if False:
         # Simplified codegen
         condA = test.condition()
@@ -676,19 +698,21 @@ def if_not_or_if_not_same_instance(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         notDup1 = dup1.__not__()
         with notDup1.__branch__() as success:
             if success:
                 log_say("true")
-        
+
         notNotDup1 = notDup1.__not__()
         with notNotDup1.__branch__() as success:
             if success:
                 log_say("false")
 
+
 @test("if-or2", enabled=False)
-def if_or2(test: ConditionTest):
+def if_or2():
+    test = ConditionTest()
     if test.condition() or test.condition() or test.condition():
         log_say("true")
 
@@ -714,11 +738,13 @@ def if_or2(test: ConditionTest):
             if success:
                 log_say("true")
 
+
 @test("if-not-or2", enabled=True)
-def if_not_or2(test: ConditionTest):
+def if_not_or2():
+    test = ConditionTest()
     if not (test.condition() or test.condition() or test.condition()):
         log_say("true")
-    
+
     if True:
         # Simplified codegen
         condA = test.condition()
@@ -729,15 +755,17 @@ def if_not_or2(test: ConditionTest):
             if success:
                 condB = test.condition()
                 dup1 = dup1.__rebind__(condB)
-        
+
         notDup1 = dup1.__not__()
         dup2 = dup1.__dup__()
         with notDup1.__branch__() as success:
             if success:
                 log_say("true")
 
+
 @test("if-or2-else", enabled=False)
-def if_or2_else(test: ConditionTest):
+def if_or2_else():
+    test = ConditionTest()
     if test.condition() or test.condition() or test.condition():
         log_say("true")
     else:
@@ -770,8 +798,10 @@ def if_or2_else(test: ConditionTest):
             if success:
                 log_say("false")
 
+
 @test("if-or2 ... if not, same instance", enabled=False)
-def if_or2_if_not_same_instance(test: ConditionTest):
+def if_or2_if_not_same_instance():
+    test = ConditionTest()
     log_say("should be different from if-or2-else")
     cond = test.condition() or test.condition() or test.condition()
     if cond:

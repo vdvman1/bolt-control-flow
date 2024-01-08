@@ -1,0 +1,7 @@
+require:
+  - bolt
+  - bolt_control_flow
+data_pack:
+  load: "src"
+pipeline:
+  - mecha
