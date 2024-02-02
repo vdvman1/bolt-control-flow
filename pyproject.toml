@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bolt_control_flow"
-version = "0.0.0"
+version = "0.1.0"
 description = "Utilities and helpers for overriding control flow behaviour in Bolt"
 authors = ["Stefan van der Velden <vdvman1@users.noreply.github.com>"]
 license = "MIT"
