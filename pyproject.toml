@@ -5,24 +5,23 @@ description = "Utilities and helpers for overriding control flow behaviour in Bo
 authors = ["Stefan van der Velden <vdvman1@users.noreply.github.com>"]
 license = "MIT"
 
-homepage = "https://github.com/vdvman1/bolt-control-flow"
 readme = "README.md"
+homepage = "https://github.com/vdvman1/bolt-control-flow"
+repository = "https://github.com/vdvman1/bolt-control-flow"
+documentation = "https://github.com/vdvman1/bolt-control-flow/wiki"
 
-keywords = [
-  "beet",
-  "bolt",
-  "minecraft",
-  "minecraft-commands",
-  "mcfunction",
-]
+keywords = ["beet", "bolt", "minecraft", "minecraft-commands", "mcfunction"]
 
 include = ["bolt_control_flow/py.typed"]
 
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/vdvman1/bolt-control-flow/issues"
+
 [tool.poetry.dependencies]
 python = "^3.10"
-beet = ">=0.79.0"
-mecha = ">=0.57.4"
-bolt = ">=0.19.3"
+beet = ">=0.97.0"
+mecha = ">=0.83.0"
+bolt = ">=0.41.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1.3"
