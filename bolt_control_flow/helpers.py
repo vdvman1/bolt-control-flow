@@ -1,8 +1,18 @@
+from collections.abc import Iterator, Callable
+from contextlib import AbstractContextManager, contextmanager
 from functools import partial
-from bolt import Runtime
+from types import TracebackType
+from typing import Any, Literal, Optional, TypeAlias, TypeGuard
+
+from bolt import Accumulator, Runtime
 
 from bolt_control_flow.types import (
     BinaryLogicalFallback,
+    BranchInfo,
+    BranchType,
+    Case,
+    CasePartialResult,
+    CaseResult,
 )
 
 
@@ -10,6 +20,7 @@ def get_runtime_helpers() -> dict[str, Any]:
     return {
         "operator_and": partial(binary_logical, "and"),
         "operator_or": partial(binary_logical, "or"),
+        **{t.helper: partial(MultibranchDriver, t) for t in BranchType},
     }
 
 
@@ -68,3 +79,131 @@ def binary_logical(
                 left = right_value
 
     return left
+
+
+CaseCallable: TypeAlias = Callable[
+    [Any, Case], AbstractContextManager[CasePartialResult]
+]
+
+_LAZY_NOT_SENTINEL = object()
+
+
+class CaseDriver:
+    obj: Any
+    runtime: Runtime
+    case_func: Optional[CaseCallable]
+    not_obj: Any = _LAZY_NOT_SENTINEL
+
+    def __init__(self, obj: Any, runtime: Runtime) -> None:
+        self.obj = obj
+        self.runtime = runtime
+        self.case_func = getattr(type(obj), "__case__", None)
+
+    @staticmethod
+    def codegen_access_underlying(target: str) -> str:
+        """Generate an access to the underlying case object
+
+        This is a helper to keep the hardcoded name of the attribute close to the definition of the attribute
+
+        :param target: Code str for accessing a CaseDriver
+        :type target: str
+        :return: Code str for accessing the underlying case object
+        :rtype: str
+        """
+        return target + ".obj"
+
+    def _fallback_case(self, case: bool | Any) -> Iterator[CaseResult]:
+        match case:
+            case bool(is_if):
+                assert (self.not_obj is _LAZY_NOT_SENTINEL) == is_if
+
+                if is_if:
+                    # Lazily calculated when detecting an if...else so that the not isn't called for pattern matching
+                    self.not_obj = call_not(self.obj, self.runtime)
+                    obj = self.obj
+                else:
+                    obj = self.not_obj
+
+                with call_branch(obj, self.runtime) as _bolt_condition:
+                    yield (_bolt_condition, ())
+            case _:
+                # TODO: use pattern's default implementation
+                raise NotImplementedError("Fallback pattern matching")
+
+    def _should_use_case(
+        self, case_func: Optional[CaseCallable]
+    ) -> TypeGuard[CaseCallable]:
+        if case_func is None:
+            # The type doesn't implement __case__
+            return False
+
+        if self.not_obj is not _LAZY_NOT_SENTINEL:
+            # __case__ returned NotImplemented for `if` (True) in the previous call
+            return False
+
+        return True
+
+    @contextmanager
+    def __case__(self, case: bool | Any) -> Iterator[CaseResult]:
+        if not self._should_use_case(self.case_func):
+            yield from self._fallback_case(case)
+            return
+
+        with self.case_func(self.obj, case) as res:
+            if res is not NotImplemented:
+                yield res
+                return
+
+        if case is False:
+            raise ValueError(
+                f"Type {type(self.obj)} implemented __case__ for `if` (True) but not `else` (False)"
+            )
+
+        yield from self._fallback_case(case)
+
+
+class MultibranchDriver:
+    obj: Any
+    context_manager: Optional[AbstractContextManager[Any]] = None
+    runtime: Runtime
+
+    def __init__(
+        self,
+        branch_type: BranchType,
+        obj: Any,
+        runtime: Runtime,
+        parent_cases: Optional[Any],
+    ) -> None:
+        self.obj = obj
+        self.runtime = runtime
+
+        tobj = type(obj)
+        if func := getattr(tobj, "__multibranch__", None):
+            self.context_manager = func(obj, BranchInfo(branch_type, parent_cases))
+
+    @staticmethod
+    def codegen_call(
+        acc: Accumulator, parent_cases: str, branch_type: BranchType, condition: str
+    ) -> str:
+        return acc.helper(branch_type.helper, condition, "_bolt_runtime", parent_cases)
+
+    def __enter__(self) -> Any:
+        if self.context_manager is None:
+            obj = self.obj
+        else:
+            obj = self.context_manager.__enter__()
+            if obj is NotImplemented:
+                obj = self.obj
+
+        return CaseDriver(obj, self.runtime)
+
+    def __exit__(
+        self,
+        exc_type: Optional[type[BaseException]],
+        exc: Optional[BaseException],
+        traceback: Optional[TracebackType],
+    ) -> Optional[bool]:
+        if self.context_manager is not None:
+            return self.context_manager.__exit__(exc_type, exc, traceback)
+
+        return None
