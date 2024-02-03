@@ -6,9 +6,9 @@ authors = ["Stefan van der Velden <vdvman1@users.noreply.github.com>"]
 license = "MIT"
 
 readme = "README.md"
-homepage = "https://github.com/vdvman1/bolt-control-flow"
+homepage = "https://vdvman1.github.io/bolt-control-flow/"
 repository = "https://github.com/vdvman1/bolt-control-flow"
-documentation = "https://github.com/vdvman1/bolt-control-flow/wiki"
+documentation = "https://vdvman1.github.io/bolt-control-flow/"
 
 keywords = ["beet", "bolt", "minecraft", "minecraft-commands", "mcfunction"]
 
