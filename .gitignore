@@ -10,3 +10,8 @@ dist/
 # Cache
 .beet_cache/
 .pytest_cache/
+
+# Built docs
+docs/build/
+docs/source/generated/
+gh-pages/

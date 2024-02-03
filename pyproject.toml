@@ -31,6 +31,14 @@ pytest-insta = "^0.1.11"
 lectern = ">=0.25.0"
 python-semantic-release = "^7.32.1"
 
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "^7.2.6"
+sphinx-pyproject = "^0.3.0"
+furo = "^2024.1.29"
+
 [tool.pytest.ini_options]
 addopts = "tests --import-mode=importlib"
 

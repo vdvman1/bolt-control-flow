@@ -11,6 +11,17 @@ from bolt_control_flow.parse import Codegen
 # Make the contents of these modules available directly in `from bolt_control_flow import ...`
 from bolt_control_flow.types import *
 
+__all__ = [
+    "CaseResult",
+    "CasePartialResult",
+    "Case",
+    "BranchType",
+    "BranchInfo",
+    "BinaryLogicalFallback",
+    "WrappedCases",
+    "utils",
+]
+
 
 def beet_default(ctx: Context):
     ctx.require(

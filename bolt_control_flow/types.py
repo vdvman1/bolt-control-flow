@@ -3,6 +3,16 @@ from enum import Enum, auto
 from types import NotImplementedType
 from typing import Any, Optional, TypeAlias
 
+__all__ = [
+    "CaseResult",
+    "CasePartialResult",
+    "Case",
+    "BranchType",
+    "BranchInfo",
+    "BinaryLogicalFallback",
+    "WrappedCases",
+]
+
 CaseResult: TypeAlias = tuple[Any, tuple[Any, ...]]
 CasePartialResult: TypeAlias = CaseResult | NotImplementedType
 
