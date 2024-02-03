@@ -1,0 +1,27 @@
+CaseResult
+==========
+
+.. currentmodule:: bolt_control_flow
+
+.. autoclass:: CaseResult
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CaseResult.__init__
+      ~CaseResult.count
+      ~CaseResult.index
+   
+   
+
+   
+   
+   

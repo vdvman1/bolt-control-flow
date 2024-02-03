@@ -1,0 +1,27 @@
+BranchType
+==========
+
+.. currentmodule:: bolt_control_flow
+
+.. autoclass:: BranchType
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~BranchType.IF_ELSE
+      ~BranchType.MATCH
+      ~BranchType.helper
+   
+   
