@@ -21,12 +21,20 @@ version = ".".join(version_parts)
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.autosummary"]
+extensions = [
+    "sphinx.ext.napoleon",
+    "autoapi.extension",
+]
 
 templates_path = ["_templates"]
 exclude_patterns = []
 
 default_role = "py:obj"
+
+rst_prolog = """
+.. role:: python(code)
+   :language: python
+"""
 
 smartquotes = False
 
@@ -38,7 +46,16 @@ maximum_signature_line_length = 88  # Matches the default for Black
 html_theme = "furo"
 html_static_path = ["_static"]
 
-# -- Options for autosummary -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/autosummary.html#generating-stub-pages-automatically
+# -- Options for autoapi -----------------------------------------------------
+# https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html
 
-autosummary_ignore_module_all = False
+autoapi_dirs = ["../../bolt_control_flow"]
+autoapi_options = [
+    "members",
+    "inherited_members",
+    "undoc-members",
+    "special_members",
+    "show-inheritance",
+    "show-module-summary",
+    "imported-members",
+]
