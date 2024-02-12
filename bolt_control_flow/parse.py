@@ -8,7 +8,7 @@ from bolt.ast import AstExpressionBinary
 from beet.core.utils import extra_field
 from bolt_control_flow.helpers import CaseDriver, MultibranchDriver
 
-from bolt_control_flow.types import BranchType
+from bolt_control_flow.types import BranchType, CaseResult
 
 
 @dataclass(eq=False)
@@ -45,12 +45,16 @@ class Codegen(Dispatcher[Any]):
         self.is_conditional_only_in_last_case = body_is_conditional_only_in_last_case
         try:
             condition = "_bolt_condition"
+            case_result = CaseResult.Codegen(condition)
             acc.statement(
-                f"with {self.cases_vars[-1]}.__case__({case}) as ({condition}, ({','.join(bindings)})):"
+                f"with {self.cases_vars[-1]}.__case__({case}) as {condition}:"
             )
             with acc.block():
-                acc.statement(f"if {condition}:")
+                acc.statement(f"if {case_result.match_type}:")
                 with acc.block():
+                    for binding in bindings:
+                        acc.statement(f"{binding} = {case_result.binding(binding)}")
+
                     yield
         finally:
             self.is_conditional_only_in_last_case = was_nested

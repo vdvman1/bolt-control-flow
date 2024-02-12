@@ -4,7 +4,7 @@ from typing import Iterator, Literal
 
 from click import IntRange
 
-from bolt_control_flow import Case, CasePartialResult, BranchInfo, BranchType, WrappedCases
+from bolt_control_flow import Case, CaseResult, CasePartialResult, BranchInfo, BranchType, WrappedCases
 
 from bolt_control_flow:test/helpers import log_say, log_block, test, IntRange
 
@@ -53,11 +53,11 @@ class ScoreCases(WrappedCases):
             if self.matches:
                 # Would like to avoid this explicit function, but Bolt doesn't currently support implicit `return run`
                 execute return run function ctx.generate.format(~/ + "/true_{incr}"):
-                    yield (True, ())
+                    yield CaseResult.maybe()
         else:
             # Condition has already been checked and returned early if it passed
             # So can just emit the false body
-            yield (True, ())
+            yield CaseResult.maybe()
 
 @test("if-else")
 def if_else() -> None:

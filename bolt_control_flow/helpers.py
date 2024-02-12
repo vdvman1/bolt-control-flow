@@ -11,6 +11,7 @@ from bolt_control_flow.types import (
     BranchInfo,
     BranchType,
     Case,
+    CaseMatchType,
     CasePartialResult,
     CaseResult,
 )
@@ -93,6 +94,7 @@ class CaseDriver:
     runtime: Runtime
     case_func: Optional[CaseCallable]
     not_obj: Any = _LAZY_NOT_SENTINEL
+    case_definitely_matched: bool = False
 
     def __init__(self, obj: Any, runtime: Runtime) -> None:
         self.obj = obj
@@ -125,7 +127,11 @@ class CaseDriver:
                     obj = self.not_obj
 
                 with call_branch(obj, self.runtime) as _bolt_condition:
-                    yield (_bolt_condition, ())
+                    if _bolt_condition:
+                        # the original __branch__ pattern treated True as if it were maybe
+                        yield CaseResult.maybe()
+                    else:
+                        yield CaseResult.failed()
             case _:
                 # TODO: use pattern's default implementation
                 raise NotImplementedError("Fallback pattern matching")
@@ -145,12 +151,20 @@ class CaseDriver:
 
     @contextmanager
     def __case__(self, case: bool | Any) -> Iterator[CaseResult]:
+        if self.case_definitely_matched:
+            # Don't attempt to match after a previous match passed at build time
+            yield CaseResult.failed()
+            return
+
         if not self._should_use_case(self.case_func):
             yield from self._fallback_case(case)
             return
 
         with self.case_func(self.obj, case) as res:
-            if res is not NotImplemented:
+            if isinstance(res, CaseResult):
+                if res.match_type == CaseMatchType.MATCHED:
+                    self.case_definitely_matched = True
+
                 yield res
                 return
 

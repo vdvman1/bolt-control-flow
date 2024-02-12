@@ -13,13 +13,13 @@ from bolt_control_flow.types import *
 
 __all__ = [
     "CaseResult",
+    "CaseMatchType",
     "CasePartialResult",
     "Case",
     "BranchType",
     "BranchInfo",
     "BinaryLogicalFallback",
     "WrappedCases",
-    "utils",
 ]
 
 
