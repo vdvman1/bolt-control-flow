@@ -1,3 +1,9 @@
+"""Parsing and codegen logic
+
+Danger:
+    This is an internal module, not meant for public usage
+"""
+
 from collections.abc import Generator
 from contextlib import contextmanager
 from dataclasses import dataclass

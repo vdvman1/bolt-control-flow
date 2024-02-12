@@ -96,30 +96,85 @@ class CaseResult:
 
 
 CasePartialResult: TypeAlias = CaseResult | NotImplementedType
+"""The :python:`yield` type of a :python:`__case__` that doesn't implement all `Case` types
+
+:type: CaseResult | NotImplementedType
+"""
 
 
 # TODO: more specific type for case object when representing match cases
 Case: TypeAlias = bool | Any
+"""The case being matched against
+
+Possible values:
+
+:python:`True`
+    The :python:`if` case of an :python:`if ... else`
+
+:python:`False`
+    The :python:`else` case of an :python:`if ... else`
+
+Anything else
+    A pattern used in a :python:`case` within a :python:`match`
+
+:type: bool | Any
+
+Note:
+    This type is currently a placeholder, it will be made more specific once pattern matching is implemented
+"""
 
 
 class BranchType(Enum):
+    """The type of multibranch being processed"""
+
     IF_ELSE = auto()
+    """An :python:`if ... else`"""
+
     MATCH = auto()
+    """A :python:`match`"""
 
     @property
     def helper(self) -> str:
+        """Get the name of the runtime helper for the :py:class:`~bolt_control_flow.helpers.MultibranchDriver` of this type
+
+        Danger:
+            This is an internal helper, not meant for public usage
+        """
         return f"multibranch_{self.name}"
 
 
 @dataclass(frozen=True)
 class BranchInfo:
+    """Information about the multibranch being processed"""
+
     branch_type: BranchType
+    """The type of multibranch being processed"""
+
     parent_cases: Optional[Any]
+    """The result of the parent :python:`__multibranch__`
+    
+    Will be :python:`None` if any of these are true:
+        * there is no parent
+        * there are more cases in the parent following the current case
+        * this conditional isn't the only piece of the body of the current case
+
+    Useful for merging separate nested multibranches into a single multibranch. e.g. :python:`elif` or :python:`case _:`
+    """
 
 
 @dataclass
 class BinaryLogicalFallback:
+    """Return this from a binary logical operator to request fallback/default behaviour
+
+    During fallback, it will attempt to call :python:`__rlogical_{op}__` on the :py:attr:`right` value,
+    and if that also requests fallback it will use the plain-bolt implementation of the logical operator
+    """
+
     right: Any
+    """The result of evaluating the lazy right value callback
+    
+    This is so that the value isn't calculated again during fallback
+    """
 
 
 class WrappedCases:
