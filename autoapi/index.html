@@ -3,12 +3,13 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="BranchType" href="bolt_control_flow.BranchType.html" /><link rel="prev" title="bolt_control_flow" href="bolt_control_flow.html" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="bolt_control_flow" href="bolt_control_flow/index.html" /><link rel="prev" title="Welcome to bolt-control-flow&#39;s documentation!" href="../index.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>CaseResult - bolt-control-flow 0.1.0 documentation</title>
+        <title>API Reference - bolt-control-flow 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
     
     
@@ -134,7 +135,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -156,13 +157,11 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../api.html">API</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current has-children"><a class="reference internal" href="bolt_control_flow.html">bolt_control_flow</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of bolt_control_flow</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">CaseResult</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow.BranchType.html">BranchType</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow.BranchInfo.html">BranchInfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow.BinaryLogicalFallback.html">BinaryLogicalFallback</a></li>
-<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow.WrappedCases.html">WrappedCases</a></li>
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="bolt_control_flow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of bolt_control_flow</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow/helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.helpers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow/parse/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.parse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bolt_control_flow/types/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.types</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -195,20 +194,31 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="caseresult">
-<h1>CaseResult<a class="headerlink" href="#caseresult" title="Link to this heading">#</a></h1>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="bolt_control_flow.CaseResult">
-<span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">CaseResult</span></span><a class="headerlink" href="#bolt_control_flow.CaseResult" title="Link to this definition">#</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>, ...]]</p>
-</dd></dl>
-
+          <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
+<p>This page contains auto-generated API reference documentation <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bolt_control_flow/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bolt_control_flow/helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.helpers</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bolt_control_flow/parse/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.parse</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bolt_control_flow/types/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.types</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Created with <a class="reference external" href="https://github.com/readthedocs/sphinx-autoapi">sphinx-autoapi</a></p>
+</aside>
+</aside>
 </section>
 
         </article>
@@ -216,23 +226,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="bolt_control_flow.BranchType.html">
+          <a class="next-page" href="bolt_control_flow/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">BranchType</div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="bolt_control_flow.html">
+          <a class="prev-page" href="../index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">bolt_control_flow</div>
+                <div class="title">Home</div>
                 
               </div>
             </a>
@@ -254,27 +264,8 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">CaseResult</a><ul>
-<li><a class="reference internal" href="#bolt_control_flow.CaseResult"><code class="docutils literal notranslate"><span class="pre">CaseResult</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

@@ -1,0 +1,53 @@
+:py:mod:`bolt_control_flow.parse`
+=================================
+
+.. py:module:: bolt_control_flow.parse
+
+.. autoapi-nested-parse::
+
+   Parsing and codegen logic
+
+   .. danger:: This is an internal module, not meant for public usage
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   bolt_control_flow.parse.Codegen
+
+
+
+
+.. py:class:: Codegen
+
+
+   Bases: :py:obj:`mecha.Dispatcher`\ [\ :py:obj:`Any`\ ]
+
+   Ast dispatcher.
+
+   .. py:attribute:: cases_vars
+      :type: list[str]
+
+      
+
+   .. py:attribute:: is_conditional_only_in_last_case
+      :type: bool
+
+      
+
+   .. py:method:: binary_logical(node: bolt.ast.AstExpressionBinary, acc: bolt.Accumulator) -> collections.abc.Generator[mecha.AstNode, Optional[list[str]], Optional[list[str]]]
+
+
+   .. py:method:: if_statement(node: mecha.AstCommand, acc: bolt.Accumulator) -> collections.abc.Generator[mecha.AstNode, Optional[list[str]], Optional[list[str]]]
+
+
+   .. py:method:: else_statement(node: mecha.AstCommand, acc: bolt.Accumulator) -> collections.abc.Generator[mecha.AstNode, Optional[list[str]], Optional[list[str]]]
+
+
+

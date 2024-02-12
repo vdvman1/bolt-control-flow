@@ -1,0 +1,129 @@
+:py:mod:`bolt_control_flow.helpers`
+===================================
+
+.. py:module:: bolt_control_flow.helpers
+
+.. autoapi-nested-parse::
+
+   Runtime implementation helpers
+
+   .. danger:: This is an internal module, not meant for public usage
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   bolt_control_flow.helpers.CaseDriver
+   bolt_control_flow.helpers.MultibranchDriver
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   bolt_control_flow.helpers.get_runtime_helpers
+   bolt_control_flow.helpers.call_branch
+   bolt_control_flow.helpers.call_not
+   bolt_control_flow.helpers.binary_logical
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   bolt_control_flow.helpers.CaseCallable
+
+
+.. py:function:: get_runtime_helpers() -> dict[str, Any]
+
+
+.. py:function:: call_branch(condition: Any, runtime: bolt.Runtime) -> contextlib.AbstractContextManager[Any]
+
+
+.. py:function:: call_not(condition: Any, runtime: bolt.Runtime) -> Any
+
+
+.. py:function:: binary_logical(op: Literal[and, or], runtime: bolt.Runtime, left: Any, right: collections.abc.Callable[[], Any]) -> Any
+
+
+.. py:data:: CaseCallable
+   :type: TypeAlias
+
+   
+
+.. py:class:: CaseDriver(obj: Any, runtime: bolt.Runtime)
+
+
+   .. py:attribute:: obj
+      :type: Any
+
+      
+
+   .. py:attribute:: runtime
+      :type: bolt.Runtime
+
+      
+
+   .. py:attribute:: case_func
+      :type: Optional[CaseCallable]
+
+      
+
+   .. py:attribute:: not_obj
+      :type: Any
+
+      
+
+   .. py:attribute:: case_definitely_matched
+      :type: bool
+      :value: False
+
+      
+
+   .. py:method:: codegen_access_underlying(target: str) -> str
+      :staticmethod:
+
+      Generate an access to the underlying case object
+
+      This is a helper to keep the hardcoded name of the attribute close to the definition of the attribute
+
+      :param target: Code str for accessing a CaseDriver
+      :type target: str
+      :return: Code str for accessing the underlying case object
+      :rtype: str
+
+
+
+.. py:class:: MultibranchDriver(branch_type: bolt_control_flow.types.BranchType, obj: Any, runtime: bolt.Runtime, parent_cases: Optional[Any])
+
+
+   .. py:attribute:: obj
+      :type: Any
+
+      
+
+   .. py:attribute:: context_manager
+      :type: Optional[contextlib.AbstractContextManager[Any]]
+
+      
+
+   .. py:attribute:: runtime
+      :type: bolt.Runtime
+
+      
+
+   .. py:method:: codegen_call(acc: bolt.Accumulator, parent_cases: str, branch_type: bolt_control_flow.types.BranchType, condition: str) -> str
+      :staticmethod:
+
+
+

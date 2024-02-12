@@ -1,0 +1,229 @@
+:py:mod:`bolt_control_flow`
+===========================
+
+.. py:module:: bolt_control_flow
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   helpers/index.rst
+   parse/index.rst
+   types/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   bolt_control_flow.CaseResult
+   bolt_control_flow.CaseMatchType
+   bolt_control_flow.BranchType
+   bolt_control_flow.BranchInfo
+   bolt_control_flow.BinaryLogicalFallback
+   bolt_control_flow.WrappedCases
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   bolt_control_flow.CasePartialResult
+   bolt_control_flow.Case
+
+
+.. py:class:: CaseResult
+
+
+   Information about a match
+
+   .. py:class:: Codegen
+
+
+      Helpers for generating code for accessing members of :py:class:`CaseResult`
+
+      .. danger:: This is an internal helper, not meant for public usage
+
+      .. py:property:: match_type
+         :type: str
+
+         Generate code for accessing the :py:attr:`~CaseResult.match_type`
+
+      .. py:attribute:: name
+         :type: str
+
+         Name of the variable holding this :py:class:`CaseResult`
+
+      .. py:method:: binding(binding: str) -> str
+
+         Generate code for accessing the given binding in the :py:attr:`~CaseResult.bindings`
+
+
+
+   .. py:attribute:: match_type
+      :type: CaseMatchType
+
+      The match status
+
+   .. py:attribute:: bindings
+      :type: dict[str, Any]
+
+      Any bindings to be assigned in the condition caller's scope
+
+      Must contain all the bindings that the case pattern is expecting, and any extra bindings will be ignored
+
+      .. note:: If :py:attr:`match_type` is :py:const:`CaseMatchType.FAILED` these bindings will be ignored
+
+   .. py:method:: failed() -> CaseResult
+      :staticmethod:
+
+      :python:`yield` this value to indicate that the match failed at build time
+
+
+   .. py:method:: matched(**bindings: Any) -> CaseResult
+      :staticmethod:
+
+      :python:`yield` this value to indicate that the match passed at build time and run the body of the condition
+
+      :param \*\*bindings: The bindings to be assigned in the condition caller's scope
+
+
+   .. py:method:: maybe(**bindings: Any) -> CaseResult
+      :staticmethod:
+
+      :python:`yield` this value to indicate that the match can't be determined until runtime
+
+      It is expected for the runtime check to wrap the :python:`yield`,
+      so that running the body of the condition will be wrapped in the check
+
+      :param \*\*bindings: The bindings to be assigned in the condition caller's scope
+
+
+
+.. py:class:: CaseMatchType
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   The status of a match
+
+   .. py:attribute:: FAILED
+
+      The match failed at build time
+
+   .. py:attribute:: MATCHED
+
+      The match succeeded at build time
+
+   .. py:attribute:: MAYBE
+
+      Whether the match passed isn't known until runtime
+
+
+.. py:data:: CasePartialResult
+   :type: TypeAlias
+
+   The :python:`yield` type of a :python:`__case__` that doesn't implement all `Case` types
+
+   :type: CaseResult | NotImplementedType
+
+.. py:data:: Case
+   :type: TypeAlias
+
+   The case being matched against
+
+   Possible values:
+
+   :python:`True`
+       The :python:`if` case of an :python:`if ... else`
+
+   :python:`False`
+       The :python:`else` case of an :python:`if ... else`
+
+   Anything else
+       A pattern used in a :python:`case` within a :python:`match`
+
+   :type: bool | Any
+
+   .. note:: This type is currently a placeholder, it will be made more specific once pattern matching is implemented
+
+.. py:class:: BranchType
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   The type of multibranch being processed
+
+   .. py:property:: helper
+      :type: str
+
+      Get the name of the runtime helper for the :py:class:`~bolt_control_flow.helpers.MultibranchDriver` of this type
+
+      .. danger:: This is an internal helper, not meant for public usage
+
+   .. py:attribute:: IF_ELSE
+
+      An :python:`if ... else`
+
+   .. py:attribute:: MATCH
+
+      A :python:`match`
+
+
+.. py:class:: BranchInfo
+
+
+   Information about the multibranch being processed
+
+   .. py:attribute:: branch_type
+      :type: BranchType
+
+      The type of multibranch being processed
+
+   .. py:attribute:: parent_cases
+      :type: Optional[Any]
+
+      The result of the parent :python:`__multibranch__`
+
+      Will be :python:`None` if any of these are true:
+          * there is no parent
+          * there are more cases in the parent following the current case
+          * this conditional isn't the only piece of the body of the current case
+
+      Useful for merging separate nested multibranches into a single multibranch. e.g. :python:`elif` or :python:`case _:`
+
+
+.. py:class:: BinaryLogicalFallback
+
+
+   Return this from a binary logical operator to request fallback/default behaviour
+
+   During fallback, it will attempt to call :python:`__rlogical_{op}__` on the :py:attr:`right` value,
+   and if that also requests fallback it will use the plain-bolt implementation of the logical operator
+
+   .. py:attribute:: right
+      :type: Any
+
+      The result of evaluating the lazy right value callback
+
+      This is so that the value isn't calculated again during fallback
+
+
+.. py:class:: WrappedCases
+
+
+   Marker class to indicate that it is safe for nested conditions to use return without making new functions
+
+   i.e. there are no commands after the cases that must be run
+
+

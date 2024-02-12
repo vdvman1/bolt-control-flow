@@ -1,0 +1,599 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="bolt_control_flow.helpers" href="helpers/index.html" /><link rel="prev" title="API Reference" href="../index.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+        <title>bolt_control_flow - bolt-control-flow 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">bolt-control-flow 0.1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">bolt-control-flow 0.1.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of bolt_control_flow</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.helpers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="parse/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.parse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="types/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.types</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="module-bolt_control_flow">
+<span id="bolt-control-flow"></span><h1><a class="reference internal" href="#module-bolt_control_flow" title="bolt_control_flow"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow</span></code></a><a class="headerlink" href="#module-bolt_control_flow" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="helpers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.helpers</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="parse/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.parse</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="types/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.types</span></code></a></li>
+</ul>
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h3>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CaseResult</span></code></a></p></td>
+<td><p>Information about a match</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bolt_control_flow.CaseMatchType" title="bolt_control_flow.CaseMatchType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CaseMatchType</span></code></a></p></td>
+<td><p>The status of a match</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bolt_control_flow.BranchType" title="bolt_control_flow.BranchType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BranchType</span></code></a></p></td>
+<td><p>The type of multibranch being processed</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bolt_control_flow.BranchInfo" title="bolt_control_flow.BranchInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BranchInfo</span></code></a></p></td>
+<td><p>Information about the multibranch being processed</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bolt_control_flow.BinaryLogicalFallback" title="bolt_control_flow.BinaryLogicalFallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BinaryLogicalFallback</span></code></a></p></td>
+<td><p>Return this from a binary logical operator to request fallback/default behaviour</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bolt_control_flow.WrappedCases" title="bolt_control_flow.WrappedCases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WrappedCases</span></code></a></p></td>
+<td><p>Marker class to indicate that it is safe for nested conditions to use return without making new functions</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h3>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#bolt_control_flow.CasePartialResult" title="bolt_control_flow.CasePartialResult"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CasePartialResult</span></code></a></p></td>
+<td><p>The <code class="code highlight python docutils literal highlight-python"><span class="k">yield</span></code> type of a <code class="code highlight python docutils literal highlight-python"><span class="n">__case__</span></code> that doesn't implement all <a class="reference internal" href="#bolt_control_flow.Case" title="bolt_control_flow.Case"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Case</span></code></a> types</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#bolt_control_flow.Case" title="bolt_control_flow.Case"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Case</span></code></a></p></td>
+<td><p>The case being matched against</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">CaseResult</span></span><a class="headerlink" href="#bolt_control_flow.CaseResult" title="Link to this definition">#</a></dt>
+<dd><p>Information about a match</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.Codegen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Codegen</span></span><a class="headerlink" href="#bolt_control_flow.CaseResult.Codegen" title="Link to this definition">#</a></dt>
+<dd><p>Helpers for generating code for accessing members of <a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CaseResult</span></code></a></p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>This is an internal helper, not meant for public usage</p>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.Codegen.match_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">match_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#bolt_control_flow.CaseResult.Codegen.match_type" title="Link to this definition">#</a></dt>
+<dd><p>Generate code for accessing the <a class="reference internal" href="#bolt_control_flow.CaseResult.match_type" title="bolt_control_flow.CaseResult.match_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">match_type</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.Codegen.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#bolt_control_flow.CaseResult.Codegen.name" title="Link to this definition">#</a></dt>
+<dd><p>Name of the variable holding this <a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CaseResult</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.Codegen.binding">
+<span class="sig-name descname"><span class="pre">binding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">binding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#bolt_control_flow.CaseResult.Codegen.binding" title="Link to this definition">#</a></dt>
+<dd><p>Generate code for accessing the given binding in the <a class="reference internal" href="#bolt_control_flow.CaseResult.bindings" title="bolt_control_flow.CaseResult.bindings"><code class="xref py py-attr docutils literal notranslate"><span class="pre">bindings</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.match_type">
+<span class="sig-name descname"><span class="pre">match_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#bolt_control_flow.CaseMatchType" title="bolt_control_flow.CaseMatchType"><span class="pre">CaseMatchType</span></a></em><a class="headerlink" href="#bolt_control_flow.CaseResult.match_type" title="Link to this definition">#</a></dt>
+<dd><p>The match status</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.bindings">
+<span class="sig-name descname"><span class="pre">bindings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#bolt_control_flow.CaseResult.bindings" title="Link to this definition">#</a></dt>
+<dd><p>Any bindings to be assigned in the condition caller's scope</p>
+<p>Must contain all the bindings that the case pattern is expecting, and any extra bindings will be ignored</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <a class="reference internal" href="#bolt_control_flow.CaseResult.match_type" title="bolt_control_flow.CaseResult.match_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">match_type</span></code></a> is <a class="reference internal" href="#bolt_control_flow.CaseMatchType.FAILED" title="bolt_control_flow.CaseMatchType.FAILED"><code class="xref py py-const docutils literal notranslate"><span class="pre">CaseMatchType.FAILED</span></code></a> these bindings will be ignored</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.failed">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">failed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult"><span class="pre">CaseResult</span></a></span></span><a class="headerlink" href="#bolt_control_flow.CaseResult.failed" title="Link to this definition">#</a></dt>
+<dd><p><code class="code highlight python docutils literal highlight-python"><span class="k">yield</span></code> this value to indicate that the match failed at build time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.matched">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">bindings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult"><span class="pre">CaseResult</span></a></span></span><a class="headerlink" href="#bolt_control_flow.CaseResult.matched" title="Link to this definition">#</a></dt>
+<dd><p><code class="code highlight python docutils literal highlight-python"><span class="k">yield</span></code> this value to indicate that the match passed at build time and run the body of the condition</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**bindings</strong> -- The bindings to be assigned in the condition caller's scope</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseResult.maybe">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maybe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">bindings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult"><span class="pre">CaseResult</span></a></span></span><a class="headerlink" href="#bolt_control_flow.CaseResult.maybe" title="Link to this definition">#</a></dt>
+<dd><p><code class="code highlight python docutils literal highlight-python"><span class="k">yield</span></code> this value to indicate that the match can't be determined until runtime</p>
+<p>It is expected for the runtime check to wrap the <code class="code highlight python docutils literal highlight-python"><span class="k">yield</span></code>,
+so that running the body of the condition will be wrapped in the check</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**bindings</strong> -- The bindings to be assigned in the condition caller's scope</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseMatchType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">CaseMatchType</span></span><a class="headerlink" href="#bolt_control_flow.CaseMatchType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>The status of a match</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseMatchType.FAILED">
+<span class="sig-name descname"><span class="pre">FAILED</span></span><a class="headerlink" href="#bolt_control_flow.CaseMatchType.FAILED" title="Link to this definition">#</a></dt>
+<dd><p>The match failed at build time</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseMatchType.MATCHED">
+<span class="sig-name descname"><span class="pre">MATCHED</span></span><a class="headerlink" href="#bolt_control_flow.CaseMatchType.MATCHED" title="Link to this definition">#</a></dt>
+<dd><p>The match succeeded at build time</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.CaseMatchType.MAYBE">
+<span class="sig-name descname"><span class="pre">MAYBE</span></span><a class="headerlink" href="#bolt_control_flow.CaseMatchType.MAYBE" title="Link to this definition">#</a></dt>
+<dd><p>Whether the match passed isn't known until runtime</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bolt_control_flow.CasePartialResult">
+<span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">CasePartialResult</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TypeAlias</span></em><a class="headerlink" href="#bolt_control_flow.CasePartialResult" title="Link to this definition">#</a></dt>
+<dd><p>The <code class="code highlight python docutils literal highlight-python"><span class="k">yield</span></code> type of a <code class="code highlight python docutils literal highlight-python"><span class="n">__case__</span></code> that doesn't implement all <a class="reference internal" href="#bolt_control_flow.Case" title="bolt_control_flow.Case"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Case</span></code></a> types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#bolt_control_flow.CaseResult" title="bolt_control_flow.CaseResult">CaseResult</a> | NotImplementedType</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="bolt_control_flow.Case">
+<span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">Case</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">TypeAlias</span></em><a class="headerlink" href="#bolt_control_flow.Case" title="Link to this definition">#</a></dt>
+<dd><p>The case being matched against</p>
+<p>Possible values:</p>
+<dl class="simple">
+<dt><code class="code highlight python docutils literal highlight-python"><span class="kc">True</span></code></dt><dd><p>The <code class="code highlight python docutils literal highlight-python"><span class="k">if</span></code> case of an <code class="code highlight python docutils literal highlight-python"><span class="k">if</span> <span class="o">...</span> <span class="k">else</span></code></p>
+</dd>
+<dt><code class="code highlight python docutils literal highlight-python"><span class="kc">False</span></code></dt><dd><p>The <code class="code highlight python docutils literal highlight-python"><span class="k">else</span></code> case of an <code class="code highlight python docutils literal highlight-python"><span class="k">if</span> <span class="o">...</span> <span class="k">else</span></code></p>
+</dd>
+<dt>Anything else</dt><dd><p>A pattern used in a <code class="code highlight python docutils literal highlight-python"><span class="k">case</span></code> within a <code class="code highlight python docutils literal highlight-python"><span class="k">match</span></code></p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool | Any</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This type is currently a placeholder, it will be made more specific once pattern matching is implemented</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">BranchType</span></span><a class="headerlink" href="#bolt_control_flow.BranchType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>The type of multibranch being processed</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchType.helper">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">helper</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#bolt_control_flow.BranchType.helper" title="Link to this definition">#</a></dt>
+<dd><p>Get the name of the runtime helper for the <a class="reference internal" href="helpers/index.html#bolt_control_flow.helpers.MultibranchDriver" title="bolt_control_flow.helpers.MultibranchDriver"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultibranchDriver</span></code></a> of this type</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>This is an internal helper, not meant for public usage</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchType.IF_ELSE">
+<span class="sig-name descname"><span class="pre">IF_ELSE</span></span><a class="headerlink" href="#bolt_control_flow.BranchType.IF_ELSE" title="Link to this definition">#</a></dt>
+<dd><p>An <code class="code highlight python docutils literal highlight-python"><span class="k">if</span> <span class="o">...</span> <span class="k">else</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchType.MATCH">
+<span class="sig-name descname"><span class="pre">MATCH</span></span><a class="headerlink" href="#bolt_control_flow.BranchType.MATCH" title="Link to this definition">#</a></dt>
+<dd><p>A <code class="code highlight python docutils literal highlight-python"><span class="k">match</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">BranchInfo</span></span><a class="headerlink" href="#bolt_control_flow.BranchInfo" title="Link to this definition">#</a></dt>
+<dd><p>Information about the multibranch being processed</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchInfo.branch_type">
+<span class="sig-name descname"><span class="pre">branch_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#bolt_control_flow.BranchType" title="bolt_control_flow.BranchType"><span class="pre">BranchType</span></a></em><a class="headerlink" href="#bolt_control_flow.BranchInfo.branch_type" title="Link to this definition">#</a></dt>
+<dd><p>The type of multibranch being processed</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.BranchInfo.parent_cases">
+<span class="sig-name descname"><span class="pre">parent_cases</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#bolt_control_flow.BranchInfo.parent_cases" title="Link to this definition">#</a></dt>
+<dd><p>The result of the parent <code class="code highlight python docutils literal highlight-python"><span class="n">__multibranch__</span></code></p>
+<dl class="simple">
+<dt>Will be <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code> if any of these are true:</dt><dd><ul class="simple">
+<li><p>there is no parent</p></li>
+<li><p>there are more cases in the parent following the current case</p></li>
+<li><p>this conditional isn't the only piece of the body of the current case</p></li>
+</ul>
+</dd>
+</dl>
+<p>Useful for merging separate nested multibranches into a single multibranch. e.g. <code class="code highlight python docutils literal highlight-python"><span class="k">elif</span></code> or <code class="code highlight python docutils literal highlight-python"><span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.BinaryLogicalFallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">BinaryLogicalFallback</span></span><a class="headerlink" href="#bolt_control_flow.BinaryLogicalFallback" title="Link to this definition">#</a></dt>
+<dd><p>Return this from a binary logical operator to request fallback/default behaviour</p>
+<p>During fallback, it will attempt to call <code class="code highlight python docutils literal highlight-python"><span class="n">__rlogical_</span><span class="p">{</span><span class="n">op</span><span class="p">}</span><span class="n">__</span></code> on the <a class="reference internal" href="#bolt_control_flow.BinaryLogicalFallback.right" title="bolt_control_flow.BinaryLogicalFallback.right"><code class="xref py py-attr docutils literal notranslate"><span class="pre">right</span></code></a> value,
+and if that also requests fallback it will use the plain-bolt implementation of the logical operator</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="bolt_control_flow.BinaryLogicalFallback.right">
+<span class="sig-name descname"><span class="pre">right</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#bolt_control_flow.BinaryLogicalFallback.right" title="Link to this definition">#</a></dt>
+<dd><p>The result of evaluating the lazy right value callback</p>
+<p>This is so that the value isn't calculated again during fallback</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="bolt_control_flow.WrappedCases">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bolt_control_flow.</span></span><span class="sig-name descname"><span class="pre">WrappedCases</span></span><a class="headerlink" href="#bolt_control_flow.WrappedCases" title="Link to this definition">#</a></dt>
+<dd><p>Marker class to indicate that it is safe for nested conditions to use return without making new functions</p>
+<p>i.e. there are no commands after the cases that must be run</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="helpers/index.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow.helpers</span></code></div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">API Reference</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Stefan van der Velden
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bolt_control_flow</span></code></a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult"><code class="docutils literal notranslate"><span class="pre">CaseResult</span></code></a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.Codegen"><code class="docutils literal notranslate"><span class="pre">CaseResult.Codegen</span></code></a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.Codegen.match_type"><code class="docutils literal notranslate"><span class="pre">CaseResult.Codegen.match_type</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.Codegen.name"><code class="docutils literal notranslate"><span class="pre">CaseResult.Codegen.name</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.Codegen.binding"><code class="docutils literal notranslate"><span class="pre">CaseResult.Codegen.binding()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.match_type"><code class="docutils literal notranslate"><span class="pre">CaseResult.match_type</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.bindings"><code class="docutils literal notranslate"><span class="pre">CaseResult.bindings</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.failed"><code class="docutils literal notranslate"><span class="pre">CaseResult.failed()</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.matched"><code class="docutils literal notranslate"><span class="pre">CaseResult.matched()</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseResult.maybe"><code class="docutils literal notranslate"><span class="pre">CaseResult.maybe()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseMatchType"><code class="docutils literal notranslate"><span class="pre">CaseMatchType</span></code></a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.CaseMatchType.FAILED"><code class="docutils literal notranslate"><span class="pre">CaseMatchType.FAILED</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseMatchType.MATCHED"><code class="docutils literal notranslate"><span class="pre">CaseMatchType.MATCHED</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.CaseMatchType.MAYBE"><code class="docutils literal notranslate"><span class="pre">CaseMatchType.MAYBE</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bolt_control_flow.CasePartialResult"><code class="docutils literal notranslate"><span class="pre">CasePartialResult</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.Case"><code class="docutils literal notranslate"><span class="pre">Case</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.BranchType"><code class="docutils literal notranslate"><span class="pre">BranchType</span></code></a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.BranchType.helper"><code class="docutils literal notranslate"><span class="pre">BranchType.helper</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.BranchType.IF_ELSE"><code class="docutils literal notranslate"><span class="pre">BranchType.IF_ELSE</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.BranchType.MATCH"><code class="docutils literal notranslate"><span class="pre">BranchType.MATCH</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bolt_control_flow.BranchInfo"><code class="docutils literal notranslate"><span class="pre">BranchInfo</span></code></a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.BranchInfo.branch_type"><code class="docutils literal notranslate"><span class="pre">BranchInfo.branch_type</span></code></a></li>
+<li><a class="reference internal" href="#bolt_control_flow.BranchInfo.parent_cases"><code class="docutils literal notranslate"><span class="pre">BranchInfo.parent_cases</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bolt_control_flow.BinaryLogicalFallback"><code class="docutils literal notranslate"><span class="pre">BinaryLogicalFallback</span></code></a><ul>
+<li><a class="reference internal" href="#bolt_control_flow.BinaryLogicalFallback.right"><code class="docutils literal notranslate"><span class="pre">BinaryLogicalFallback.right</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bolt_control_flow.WrappedCases"><code class="docutils literal notranslate"><span class="pre">WrappedCases</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>
