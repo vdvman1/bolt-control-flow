@@ -31,12 +31,12 @@ class Codegen(Dispatcher[Any]):
         lazy_right = acc.make_variable()
         with acc.function(lazy_right):
             right = yield from visit_single(node.right, required=True)
-            acc.statement(f"return {right}")
+            acc.statement("return", right)
 
         value = acc.helper(
             f"operator_{node.operator}", "_bolt_runtime", left, lazy_right
         )
-        acc.statement(f"{left} = {value}")
+        acc.statement(left, "=", value)
         return [left]
 
     @contextmanager
@@ -53,10 +53,10 @@ class Codegen(Dispatcher[Any]):
             condition = "_bolt_condition"
             case_result = CaseResult.Codegen(condition)
             acc.statement(
-                f"with {self.cases_vars[-1]}.__case__({case}) as {condition}:"
+                "with", f"{self.cases_vars[-1]}.__case__({case})", "as", f"{condition}"
             )
             with acc.block():
-                acc.statement(f"if {case_result.match_type}:")
+                acc.statement("if", f"{case_result.match_type}")
                 with acc.block():
                     for binding in bindings:
                         acc.statement(f"{binding} = {case_result.binding(binding)}")
@@ -89,7 +89,7 @@ class Codegen(Dispatcher[Any]):
 
             cases = acc.make_variable()
             self.cases_vars.append(cases)
-            acc.statement(f"with {multibranch} as {cases}:")
+            acc.statement("with", f"{multibranch}", "as", f"{cases}")
             with acc.block():
                 with self._case_block(
                     acc, case="True", body_is_conditional_only_in_last_case=False
