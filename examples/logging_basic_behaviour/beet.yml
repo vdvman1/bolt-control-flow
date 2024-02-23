@@ -1,6 +1,7 @@
 require:
   - bolt
   - bolt_control_flow
+  - bolt_control_flow.testing
 data_pack:
   load: "src"
 pipeline:

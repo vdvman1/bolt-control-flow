@@ -24,6 +24,12 @@ __all__ = [
 
 
 def beet_default(ctx: Context):
+    runtime = ctx.inject(Runtime)
+    runtime.helpers.update(get_runtime_helpers())
+    runtime.modules.codegen.extend(Codegen())
+
+
+def testing(ctx: Context):
     ctx.require(
         load(
             data_pack={
@@ -31,7 +37,3 @@ def beet_default(ctx: Context):
             },
         ),
     )
-
-    runtime = ctx.inject(Runtime)
-    runtime.helpers.update(get_runtime_helpers())
-    runtime.modules.codegen.extend(Codegen())
