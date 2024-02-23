@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2024-02-23)
+
+### Fix
+
+* ⬆️ Fix codegen in Bolt v0.47.0 ([`52c0a3c`](https://github.com/vdvman1/bolt-control-flow/commit/52c0a3c95e41ada2a999d07a7bd14225c2c2eb11))
+* ♻️ Move testing helpers into a separate plugin to avoid adding them to all projects ([`edebd37`](https://github.com/vdvman1/bolt-control-flow/commit/edebd37e91f26da20f62141668b456b9bd4d9585))
+
+### Breaking
+
+* Minimum Bolt version is now v0.47.0 ([`52c0a3c`](https://github.com/vdvman1/bolt-control-flow/commit/52c0a3c95e41ada2a999d07a7bd14225c2c2eb11))
+* Must now require `bolt_control_flow.testing` to get access to the testing helpers ([`edebd37`](https://github.com/vdvman1/bolt-control-flow/commit/edebd37e91f26da20f62141668b456b9bd4d9585))
+
 ## v0.2.0 (2024-02-12)
 
 ### Feature
