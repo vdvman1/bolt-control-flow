@@ -4,7 +4,7 @@ Danger:
     This is an internal module, not meant for public usage
 """
 
-from collections.abc import Iterator, Callable
+from collections.abc import Callable, Iterator
 from contextlib import AbstractContextManager, contextmanager
 from functools import partial
 from types import TracebackType

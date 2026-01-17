@@ -7,7 +7,14 @@
 ```json
 {
   "pack": {
-    "pack_format": 26,
+    "min_format": [
+      94,
+      1
+    ],
+    "max_format": [
+      94,
+      1
+    ],
     "description": ""
   }
 }

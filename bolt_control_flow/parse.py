@@ -8,12 +8,13 @@ from collections.abc import Generator
 from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Any, Iterator, Optional, cast
-from bolt import Accumulator, visit_body, visit_single
-from mecha import AstCommand, AstNode, AstRoot, Dispatcher, rule
-from bolt.ast import AstExpressionBinary
-from beet.core.utils import extra_field
-from bolt_control_flow.helpers import CaseDriver, MultibranchDriver
 
+from beet.core.utils import extra_field
+from bolt import Accumulator, visit_body, visit_single
+from bolt.ast import AstExpressionBinary
+from mecha import AstCommand, AstNode, AstRoot, Dispatcher, rule
+
+from bolt_control_flow.helpers import CaseDriver, MultibranchDriver
 from bolt_control_flow.types import BranchType, CaseResult
 
 
