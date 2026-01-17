@@ -11,40 +11,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
-      - name: Cache poetry
-        id: cache-poetry
-        uses: actions/cache@v3
+          python-version: "3.14"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
-          path: ~/.local
-          key: poetry-${{ runner.os }}
-      - name: Install poetry
-        if: steps.cache-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
-        with:
-          virtualenvs-in-project: true
-      - name: Cache venv
-        id: cache-venv
-        uses: actions/cache@v3
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            venv-${{ runner.os }}-
+          enable-cache: true
+
       - name: Install dependencies
-        if: steps.cache-venv.outputs.cache-hit != 'true'
-        run: poetry install --with docs
+        run: uv sync
+
       - name: Run tests
-        run: poetry run pytest -v
+        run: uv run pytest -v
+
       - name: Check formatting
-        run: poetry run black --check .
+        run: uv run ruff format --check bolt_control_flow examples tests
+
+      - name: Check imports
+        run: uv run ruff check --select I bolt_control_flow examples tests
+
       - name: Build docs
         run: |
           mkdir gh-pages
@@ -52,15 +44,20 @@ jobs:
           cd docs/
           poetry run make html
           cp -r build/* ../gh-pages/
+
       - name: Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: |
+          github.repository == 'vdvman1/bolt-control-flow'
+          && github.event_name == 'push'
+          && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "action@github.com"
-          poetry run semantic-release publish -v DEBUG -D commit_author="github-actions <action@github.com>"
+          uv run semantic-release publish -v DEBUG -D commit_author="github-actions <action@github.com>"
+
       - name: Publish docs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@4.1.4
