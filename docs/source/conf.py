@@ -5,13 +5,13 @@
 
 from sphinx_pyproject import SphinxConfig
 
-config = SphinxConfig(pyproject_file="../../pyproject.toml", style="poetry")
+config = SphinxConfig(pyproject_file="../../pyproject.toml")
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = config.name
-copyright = f"2024, {config.author}"
+copyright = f"2026, {config.author}"
 author = config.author
 release = config.version
 version_parts = release.split(".")
