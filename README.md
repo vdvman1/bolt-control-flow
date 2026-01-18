@@ -13,4 +13,3 @@ pip install bolt_control_flow
 ---
 
 License - [MIT](https://github.com/vdvman1/bolt-control-flow/blob/main/LICENSE)
-

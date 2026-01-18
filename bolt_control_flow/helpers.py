@@ -55,7 +55,7 @@ def binary_logical(
                             case BinaryLogicalFallback():
                                 # Avoid calling the original right function again
                                 # Reuse existing value instead
-                                right = lambda: fallback_right_value
+                                right = lambda: fallback_right_value  # noqa: E731  (use def instead of lambda)
                             case res:
                                 return res
             case res:
