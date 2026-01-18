@@ -25,7 +25,7 @@ license = "MIT"
 name = "bolt_control_flow"
 readme = "README.md"
 requires-python = ">=3.14,<4"
-version = "0.3.0"
+version = "0.4.0"
 
 [project.urls]
 "Bug Tracker" = "https://github.com/vdvman1/bolt-control-flow/issues"
