@@ -9,7 +9,7 @@ env:
   PYTHON_VERSION: "3.14"
 
 jobs:
-  main:
+  release:
     name: Test and release
     runs-on: ubuntu-latest
     outputs:
